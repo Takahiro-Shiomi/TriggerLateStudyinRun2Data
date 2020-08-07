@@ -1,4 +1,4 @@
-# Install script for directory: /gpfs/fs7001/shiomi/ATLAS/Physics/Bmumu/Data/TriggerLateStudy/src
+# Install script for directory: /gpfs/fs7001/shiomi/ATLAS/Physics/Bmumu/Data/TriggerLateStudyinRun2Data/src
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)

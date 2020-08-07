@@ -13,6 +13,8 @@
 #include <TFile.h>
 #include <vector>
 #include <iostream>
+#include "TH1.h"
+#include "TH2.h"
 
 // Header file for the classes stored in the TTree if any.
 #include "vector"
@@ -240,12 +242,54 @@ public :
    TBranch        *b_TGC_Run3_Phi;   //!
    TBranch        *b_TGC_Run3_Charge;   //!
 
+   //Parameter
+   vector<float> off_eta;
+   vector<float> off_phi;
+   vector<float> off_pt;
+
+   vector<float> roi_pt;
+   vector<float> roi_eta;
+   vector<float> roi_phi;
+   vector<int>   roi_roi;
+   vector<int>   roi_sector;
+   vector<int>   roi_source;
+   vector<int>   roi_side;
+   vector<bool>  roi_ovlp;
+   vector<int>   roi_charge;
+
+   vector<float> RoI_pt;
+   vector<float> RoI_eta;
+   vector<float> RoI_phi;
+   vector<int>   RoI_charge;
+
+   //Histgram
+   TH1D *h_mass;
+   TH1D *h_mass_B;
+   TH2D *h_offpt;
+   TH2D *h_L1pt;
+
    TriggerLateStudy(TTree *tree=0);
    virtual ~TriggerLateStudy();
    virtual Int_t    Cut(Long64_t entry);
    virtual Int_t    GetEntry(Long64_t entry);
    virtual Long64_t LoadTree(Long64_t entry);
    virtual void     Init(TTree *tree);
+   virtual void     InitHist();
+   virtual void     FillHist();
+   virtual void     Draw(TString pdf);
+   virtual void     End();
+   virtual bool     Offline();
+   virtual bool     Match();
+   virtual void     Mass();
+   virtual bool     HotRoI(int tgc);
+   virtual void     TGC_Run3();
+   virtual void     RPC_Run3();
+   virtual void     OverlapRemoval();
+   virtual bool     EndcapEndcap(int roi1,int roi2,int sec1,int sec2);
+   virtual bool     ForwardForward(int roi1,int roi2,int sec1,int sec2);
+   virtual bool     ForwardEndcap(int source1,int source2,int a,int b,int c,int d);
+   virtual bool     BarrelEndcap(int side1,int side2,int source1,int source2,int a,int b,int c,int d);
+   virtual void     Clear();
    virtual void     Loop();
    virtual Bool_t   Notify();
    virtual void     Show(Long64_t entry = -1);
@@ -509,6 +553,7 @@ void TriggerLateStudy::Init(TTree *tree)
    fChain->SetBranchAddress("TGC_Run3_Phi", &TGC_Run3_Phi, &b_TGC_Run3_Phi);
    fChain->SetBranchAddress("TGC_Run3_Charge", &TGC_Run3_Charge, &b_TGC_Run3_Charge);
    Notify();
+   InitHist();
 }
 
 Bool_t TriggerLateStudy::Notify()

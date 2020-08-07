@@ -12,6 +12,15 @@ add_definitions(${ROOT_CXX_FLAGS})
 add_library(src 
     SHARED
     TriggerLateStudy.C
+    TriggerLateStudyFill.cxx
+    TriggerLateStudyDraw.cxx
+    TriggerLateStudyHist.cxx
+    TriggerLateStudyOffline.cxx
+    TriggerLateStudyOvlpRmvl.cxx
+    TriggerLateStudyTGC.cxx
+    TriggerLateStudyRPC.cxx
+    TriggerLateStudyMass.cxx
+    TriggerLateStudyHotRoI.cxx
 )
 target_include_directories(src
     PUBLIC 
